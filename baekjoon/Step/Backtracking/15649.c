@@ -1,64 +1,62 @@
 #include <stdio.h>
-#define swap(x,y,t) (t = x, x = y, y = t)
+#include <string.h>
+#include <stdlib.h>
 
-void print(int *res, int tn)
+typedef struct	s_nm
+{
+	int n;
+	int m;
+}				t_nm;
+
+void arr_print(int *arr, int m)
 {
 	int i;
 
-	for (i = 0 ; i < tn ; i++)
+	i = 0;
+	while (i < m)
 	{
-		printf("%d", res[i]);
-		if (i != tn - 1)
+		printf("%d", arr[i]);
+		if (i < m - 1)
 			printf(" ");
+		i++;
 	}
 	printf("\n");
 }
 
-void rep(int tn, int depth, int *data, int *res)
+void permutation(int depth, t_nm nums, int *arr, int *brr)
 {
 	int i;
-	int j;
 
-	for (i = 0 ; i < tn ; i++)
+	if (depth == nums.m)
 	{
-		res[depth] = data[i];
-		if (depth == tn)
-		{
-			print(res, tn);
-			return ;
-		}
-		depth++;
-		rep(tn, depth, data, res);
-		depth--;
+		arr_print(arr, nums.m);
+		return ;
 	}
-}
-void permutation(char arr[], int i, int n){
-    int j, temp;
-
-    if (i == n){
-        for(j=0; j<=n; j++) printf("%c", arr[j]);
-        printf("\n");
-        return;
-    }
-    for(j=i; j<=n; j++){
-        swap(arr[i], arr[j], temp);
-        permutation(arr, i+1, n);
-        swap(arr[i], arr[j], temp);
-    }
+	for (i = 0 ; i < nums.n ; i++)
+	{
+		if (brr[i] == 0)
+		{
+			brr[i] = 1;
+			arr[depth] = i + 1;
+			permutation(depth + 1, nums, arr, brr);
+			brr[i] = 0;
+		}
+	}
 }
 
 int main(void)
 {
-	int data[] = {1,2,3,4};
-	char arr[] = {'1','2','3','4'};
-	int tn;
-	int depth;
+	t_nm nums;
+	int *arr;
+	int *brr;
 	int i;
-	int temp;
 
-	tn = sizeof(data)/sizeof(int);
-	int res[tn];
-	depth = 0;
-	permutation(arr, 0, 3);
-//	rep(tn, depth, data, res);
+	scanf ("%d %d", &nums.n, &nums.m);
+	arr = malloc(sizeof(int) * nums.n);
+	brr = malloc(sizeof(int) * nums.n);
+	i = -1;
+	while (i++ < nums.n)
+		brr[i] = 0;
+	permutation(0, nums, arr, brr);
+	return (0);
 }
