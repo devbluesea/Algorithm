@@ -7,33 +7,33 @@ typedef struct	s_nm
 	int m;
 }				t_nm;
 
-void	arr_print(int *arr, int num)
+void	arr_print(int *arr, t_nm nums)
 {
 	int i;
 
-	for (i = 0 ; i < num ; i++)
+	for (i = 0 ; i < nums.m ; i++)
 	{
 		printf("%d", arr[i]);
-		if (i < num - 1)
+		if (i < nums.m - 1)
 			printf(" ");
 	}
 	printf("\n");
 	return ;
 }
 
-void	combination(int depth, int next , int *arr, t_nm num)
+void combination_rep(int depth, int next, int *arr, t_nm nums)
 {
 	int i;
 
-	if (depth == num.m)
+	if (depth == nums.m)
 	{
-		arr_print(arr, num.m);
+		arr_print(arr, nums);
 		return ;
 	}
-	for (i = next ; i <= num.n ; i++)
+	for (i = next ; i <= nums.n ; i++)
 	{
 		arr[depth] = i;
-		combination(depth + 1, i + 1, arr, num);
+		combination_rep(depth + 1, i, arr, nums);
 	}
 }
 
@@ -44,6 +44,6 @@ int main(void)
 
 	scanf("%d %d", &nums.n, &nums.m);
 	arr = malloc(sizeof(int) * nums.n);
-	combination(0, 1, arr, nums);
+	combination_rep(0, 1, arr, nums);
 	return (0);
 }

@@ -29,17 +29,17 @@ void permutation(int depth, t_nm nums, int *arr, int *brr)
 
 	if (depth == nums.m)
 	{
-		arr_print(arr, nums.m);
+		arr_print(brr, nums.m);
 		return ;
 	}
 	for (i = 0 ; i < nums.n ; i++)
 	{
-		if (brr[i] == 0)
+		if (arr[i] == 0)
 		{
-			brr[i] = 1;
-			arr[depth] = i + 1;
+			arr[i] = 1;
+			brr[depth] = i + 1;
 			permutation(depth + 1, nums, arr, brr);
-			brr[i] = 0;
+			arr[i] = 0;
 		}
 	}
 }
@@ -56,7 +56,7 @@ int main(void)
 	brr = malloc(sizeof(int) * nums.n);
 	i = -1;
 	while (i++ < nums.n)
-		brr[i] = 0;
+		arr[i] = 0;
 	permutation(0, nums, arr, brr);
 	return (0);
 }
